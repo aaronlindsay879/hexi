@@ -1,0 +1,18 @@
+name: hexi
+about: Interactive hex viewer
+args:
+    - sections_length:
+        short: l
+        long: length
+        help: Length of each individual sequence of bytes
+        takes_value: true
+        default_value: "8"
+    - sections_count:
+        short: c
+        long: count
+        help: Number of byte sections on each line
+        takes_value: true
+        default_value: "2"
+    - file:
+        index: 1
+        help: File to read

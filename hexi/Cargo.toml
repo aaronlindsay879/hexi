@@ -7,3 +7,4 @@ edition = "2018"
 
 [dependencies]
 hexi-lib = { path = "../hexi-lib" }
+clap = { version = "2.33", features = ["yaml"] }
