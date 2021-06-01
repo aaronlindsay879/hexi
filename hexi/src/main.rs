@@ -1,3 +1,7 @@
+use hexi_lib::hexi::Hexi;
+
 fn main() {
-    println!("Hello, world!");
+    if let Err(e) = Hexi::default().run() {
+        println!("\nSomething went wrong!\n{}", e);
+    }
 }
