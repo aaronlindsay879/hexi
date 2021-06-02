@@ -13,6 +13,12 @@ args:
         help: Number of byte sections on each line
         takes_value: true
         default_value: "2"
+    - chunk_size:
+        short: s
+        long: size
+        help: How many bytes are displayed in an individual chunk
+        takes_value: true
+        default_value: "1"
     - file:
         index: 1
         help: File to read

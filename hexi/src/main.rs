@@ -10,6 +10,7 @@ fn get_options() -> Options {
         file: value_t_or_exit!(matches, "file", String),
         section_length: value_t_or_exit!(matches, "sections_length", usize),
         sections_per_line: value_t_or_exit!(matches, "sections_count", usize),
+        chunk_size: value_t_or_exit!(matches, "chunk_size", usize),
     }
 }
 
