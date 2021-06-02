@@ -15,24 +15,26 @@ impl Hexi {
 
     /// Starts the hex viewer - this runs for an indefinite amount of time, handling user input.
     pub fn run(&mut self) -> Result<(), Error> {
-        println!("{}", self.dump_file());
+        for line in self.dump_file() {
+            println!("{}", line);
+        }
 
         Ok(())
     }
 
     /// Creates a simple dump of the loaded data, this is useful for debugging.
-    fn dump_file(&self) -> String {
+    ///
+    /// This returns an iterator for performance reasons - with an iterator, I can begin printing straight away.
+    /// This removes a large delay if a large file is dumped.
+    fn dump_file(&self) -> impl Iterator<Item = String> + '_ {
         // for every line of the document
-        (0..self.document.len())
-            .map(|line| {
-                // get that line formatted as a correct string, and print with correct line number
-                format!(
-                    "{:04X}| {}",
-                    line * self.document.get_line_length(),
-                    self.document.format_line(line)
-                )
-            })
-            .collect::<Vec<_>>()
-            .join("\n")
+        (0..self.document.len()).map(move |line| {
+            // get that line formatted as a correct string, and print with correct line number
+            format!(
+                "{:04X}| {}",
+                line * self.document.get_line_length(),
+                self.document.format_line(line)
+            )
+        })
     }
 }

@@ -10,17 +10,6 @@ pub(crate) struct Document {
     sections_per_line: usize,
 }
 
-impl Default for Document {
-    fn default() -> Self {
-        Self {
-            name: String::new(),
-            data: Vec::new(),
-            section_length: 8,
-            sections_per_line: 3,
-        }
-    }
-}
-
 impl Index<usize> for Document {
     type Output = [u8];
 
@@ -60,24 +49,28 @@ impl Document {
 
         // first of all split the data into chunks with correct section length
         // can make reasonable worst case guess of string length upper bound, so have that as the seed value
-        data.chunks(self.section_length).fold(
-            String::with_capacity(self.get_line_length() * 3),
-            |section_acc, section| {
-                // convert the section into a list of bytes, seperated by spaces
-                let section_str = section.iter().fold(
-                    String::with_capacity(self.section_length * 3),
-                    |acc, val| acc + &format!("{:02X} ", val),
-                );
+        data.chunks(self.section_length)
+            .fold(
+                String::with_capacity(self.get_line_length() * 3),
+                |section_acc, section| {
+                    // option one
+                    let section_str = section.iter().fold(
+                        String::with_capacity(self.section_length * 3),
+                        |acc, val| acc + &format!("{:02X} ", val),
+                    );
 
-                // then join each section up, delimited by 3 spaces - will be 4 spaces when extra space from section_str is included
-                // this leads to a string of the form "[section]    [section]" ... where each section is "[byte] [byte] ..."
-                section_acc + &section_str + "   "
-            },
-        )
+                    // then join each section up, delimited by 3 spaces - will be 4 spaces when extra space from section_str is included
+                    // this leads to a string of the form "[section]    [section] ...    " where each section is "[byte] [byte] ... "
+                    section_acc + &section_str + "   "
+                },
+            )
+            .trim_end()
+            .to_string()
     }
 
     /// Returns the number of lines of data stored in this document.
     pub(crate) fn len(&self) -> usize {
-        self.data.len() / self.get_line_length() + 1
+        // performs integer division of self.data.len() / self.get_line_length(), rounding up instead of down
+        (self.data.len() - 1) / self.get_line_length() + 1
     }
 }
