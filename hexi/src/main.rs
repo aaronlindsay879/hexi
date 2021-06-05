@@ -24,6 +24,7 @@ fn run(options: Options) -> Result<(), Error> {
 
 fn main() {
     let options = get_options();
+
     if let Err(e) = run(options) {
         eprintln!("Something went wrong!\n{}", e);
     }

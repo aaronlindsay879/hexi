@@ -18,7 +18,6 @@ impl Hexi {
         for line in self.dump_file() {
             println!("{}", line);
         }
-
         Ok(())
     }
 
@@ -26,12 +25,12 @@ impl Hexi {
     ///
     /// This returns an iterator for performance reasons - with an iterator, I can begin printing straight away.
     /// This removes a large delay if a large file is dumped.
-    fn dump_file(&self) -> impl Iterator<Item = String> + '_ {
+    pub fn dump_file(&self) -> impl Iterator<Item = String> + '_ {
         // for every line of the document
         (0..self.document.len()).map(move |line| {
             // get that line formatted as a correct string, and print with correct line number
             format!(
-                "{:04X}| {}",
+                "{:06X}| {}",
                 line * self.document.get_line_length(),
                 self.document.format_line(line)
             )
