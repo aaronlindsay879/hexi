@@ -3,3 +3,9 @@ members = [
 	"hexi",
 	"hexi-lib"
 ]
+
+[profile.release]
+lto = true
+
+[profile.bench]
+lto = true
