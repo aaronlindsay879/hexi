@@ -19,6 +19,9 @@ args:
         help: How many bytes are displayed in an individual chunk
         takes_value: true
         default_value: "1"
+    - interactive:
+        short: i
+        help: If enabled, will run in interactive mode.
     - file:
         index: 1
         help: File to read

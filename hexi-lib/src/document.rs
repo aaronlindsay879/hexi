@@ -67,6 +67,8 @@ impl Document {
             write!(s, "   ").expect("write exception");
         }
 
+        // remove extra spaces from the end of the string
+        s.truncate(s.len() - 4);
         s
     }
 

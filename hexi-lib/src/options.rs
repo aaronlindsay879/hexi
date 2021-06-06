@@ -1,4 +1,3 @@
-#[derive(Default)]
 pub struct Options {
     /// Name of the file
     pub file: String,
