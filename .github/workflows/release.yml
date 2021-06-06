@@ -34,7 +34,7 @@ jobs:
       
       - name: Get executable
         id: get_executable
-        run: echo "::set-output name=EXECUTABLE::$(find target/${{ matrix.rust_target }}/release/ -maxdepth 1 -type f -executable -print0)"
+        run: echo "::set-output name=EXECUTABLE::$(basename $(find target/${{ matrix.rust_target }}/release/ -maxdepth 1 -type f -executable -print0))"
           
       - name: Upload release binary
         uses: actions/upload-release-asset@v1.0.2
